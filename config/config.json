@@ -1,0 +1,8 @@
+{
+    "DB": {
+        "Username" : "husterdjx",
+        "Password" : "123456",
+        "Host"     : "127.0.0.1",
+        "Schema"   : "csedb_u202010797"
+    }
+}

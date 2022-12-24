@@ -1,8 +1,9 @@
 package dao
 
 import (
-	"context"
 	"fmt"
+	"myclient/conf"
+	"myclient/model"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -29,6 +30,7 @@ func init() {
 	engine, err := gorm.Open(mysql.Open(connStr), &gorm.Config{})
 	if err != nil {
 		logrus.Fatalf("[init]database connect error %v", err)
+		panic(err)
 	}
 	DB = engine
 	RS = &RdbService{
@@ -37,23 +39,14 @@ func init() {
 	sqldb, err := engine.DB()
 	if err != nil {
 		logrus.Fatalf("[init]invalid database driver %v", err)
+		panic(err)
 	}
 	sqldb.SetMaxIdleConns(10)
 	sqldb.SetMaxOpenConns(10000)
 	sqldb.SetConnMaxLifetime(time.Second * 3)
-	DB.AutoMigrate(model.User{})
+	DB.AutoMigrate(model.Course{})
+	DB.AutoMigrate(model.SC{})
+	DB.AutoMigrate(model.Student{})
 
-	logrus.Info("[init] db init")
-}
-
-func init() {
-	Cache = redis.NewClient(&redis.Options{
-		Network:  "tcp",
-		Addr:     conf.C.Redis.Host,
-		Password: conf.C.Redis.Password,
-	})
-	res, err := Cache.Ping(context.Background()).Result()
-	if err != nil || res != "PONG" {
-		logrus.Fatalf("[init] init redis err: %+v", err)
-	}
+	// logrus.Info("[init] db init")
 }
