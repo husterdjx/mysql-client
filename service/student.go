@@ -104,5 +104,6 @@ func QueryStudent() {
 		fmt.Printf("查询失败:%v\n", err)
 		return
 	}
-	fmt.Println("查询成功")
+	fmt.Println("查询成功,学生信息如下：")
+	fmt.Printf("学号：%v\t姓名：%v\t性别：%v\t年龄：%v\t院系：%v\t是否有奖学金：%v\n", stu.Sno, stu.Sname, stu.Ssex, stu.Sage, stu.Sdept, stu.Scholarship)
 }

@@ -12,8 +12,10 @@ import (
 )
 
 var (
-	DB *gorm.DB
-	RS *RdbService
+	DB       *gorm.DB
+	RS       *RdbService
+	username string
+	password string
 )
 
 type RdbService struct {
@@ -21,9 +23,11 @@ type RdbService struct {
 }
 
 func init() {
+	ui()
+	login()
 	connStr := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true&charset=utf8mb4,utf8",
-		conf.C.DB.UserName,
-		conf.C.DB.Password,
+		username,
+		password,
 		conf.C.DB.Host,
 		conf.C.DB.Schema,
 	)
@@ -49,4 +53,23 @@ func init() {
 	DB.AutoMigrate(model.Student{})
 
 	// logrus.Info("[init] db init")
+}
+
+/*打印一个ASCII art图像，内容为"husterdjx"*/
+func ui() {
+	fmt.Println("  __  __           _       _   _      _   _             _ ")
+	fmt.Println(" |  \\/  |         | |     | | | |    | | | |           | |")
+	fmt.Println(" | \\  / | ___   __| | __ _| |_| | ___| |_| |__   ___   | |")
+	fmt.Println(" | |\\/| |/ _ \\ / _` |/ _` | __| |/ _ \\ __| '_ \\ / _ \\  | |")
+	fmt.Println(" | |  | | (_) | (_| | (_| | |_| |  __/ |_| | | |  __/  |_|")
+	fmt.Println(" |_|  |_|\\___/ \\__,_|\\__,_|\\__|_|\\___|\\__|_| |_|\\___|  (_)")
+	fmt.Println("                                                          ")
+}
+
+/*实现一个登录界面*/
+func login() {
+	fmt.Println("请输入数据库用户名：")
+	fmt.Scanln(&username)
+	fmt.Println("请输入密码：")
+	fmt.Scanln(&password)
 }

@@ -76,7 +76,8 @@ func Sc() {
 		fmt.Println("7.查询某科目的各系最低成绩")
 		fmt.Println("8.查询某科目的各系优秀率")
 		fmt.Println("9.查询某科目的各系不及格人数")
-		fmt.Println("10.返回上一级")
+		fmt.Println("10.查询某科目的各系排名")
+		fmt.Println("11.返回上一级")
 		fmt.Println("请输入你的选择：")
 		var choice int
 		fmt.Scanln(&choice)
@@ -100,6 +101,8 @@ func Sc() {
 		case 9:
 			service.QueryFail()
 		case 10:
+			service.QueryRank()
+		case 11:
 			return
 		default:
 			fmt.Println("输入错误，请重新输入")
